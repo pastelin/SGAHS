@@ -9,9 +9,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.sgahs.springboot.app.validation.MontoValido;
 
 @Entity
 @Table(name = "prestamos")
@@ -22,15 +25,17 @@ public class Prestamo implements Serializable {
 	@Id
 	private String folio;
 
+	@NotNull
 	@Column(name = "monto_prestado")
 	private Double montoPrestado;
 
+	@NotEmpty
 	private String descripcion;
 
 	@NotNull
 	@Column(name = "fecha_creacion")
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaCreacion;
 
 	@Column(name = "monto_pagado")
@@ -38,6 +43,12 @@ public class Prestamo implements Serializable {
 
 	@Column(name = "cd_estatus")
 	private Integer cdEstatus;
+
+	public Prestamo() {
+		this.fechaCreacion = new Date();
+		this.cdEstatus = 1;
+		this.montoPagado = 0.0;
+	}
 
 	public String getFolio() {
 		return folio;

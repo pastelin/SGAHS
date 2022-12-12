@@ -6,15 +6,32 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.sgahs.springboot.app.validation.MontoValido;
+
 @Entity
 @Table(name = "inversiones")
+@NamedStoredProcedureQuery(name="spuInversion",
+	procedureName = "spu_inversion", parameters = {
+			@StoredProcedureParameter(mode= ParameterMode.IN, name= "folio", type= String.class),
+			@StoredProcedureParameter(mode= ParameterMode.IN, name= "monto", type= Double.class),
+			@StoredProcedureParameter(mode= ParameterMode.IN, name= "descripcion", type= String.class),
+			@StoredProcedureParameter(mode= ParameterMode.IN, name= "fecha", type= Date.class),
+			@StoredProcedureParameter(mode= ParameterMode.IN, name= "estatus", type= Integer.class),
+			@StoredProcedureParameter(mode= ParameterMode.IN, name= "app_inversion", type= Integer.class),
+			@StoredProcedureParameter(mode= ParameterMode.IN, name= "monto_retirado", type= Double.class),
+	}
+)
 public class Inversion implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,35 +39,33 @@ public class Inversion implements Serializable {
 	@Id
 	private String folio;
 
+	@MontoValido
 	private Double monto;
 
+	@NotEmpty
 	private String descripcion;
 
-	private Integer plazo;
-
 	@NotNull
-	@Column(name = "fecha_inicio")
+	@Column(name = "fecha_creacion")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	private Date fechaInicio;
-
-	@NotNull
-	@Column(name = "fecha_fin")
-	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
-	private Date fechaFin;
-
-	@Column(name = "cd_estatus_inversion")
-	private Integer cdEstatusInversion;
-
-	@Column(name = "cd_app_inversion")
-	private Integer cdAppInversion;
+	private Date fechaCreacion;
 
 	@Column(name = "cd_estatus")
 	private Integer cdEstatus;
 
-	@Column(name = "cd_tipo_movimiento")
-	private Integer cdTipoMovimiento;
+	@NotNull
+	@Column(name = "cd_app_inversion")
+	private Integer cdAppInversion;
+	
+	@Column(name = "monto_retirado")
+	private Double montoRetirado;
+	
+	public Inversion() {
+		this.fechaCreacion = new Date();
+		this.cdEstatus = 1;
+		this.montoRetirado = 0.0;
+	}
 
 	public String getFolio() {
 		return folio;
@@ -76,38 +91,6 @@ public class Inversion implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public Integer getPlazo() {
-		return plazo;
-	}
-
-	public void setPlazo(Integer plazo) {
-		this.plazo = plazo;
-	}
-
-	public Date getFechaInicio() {
-		return fechaInicio;
-	}
-
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
-	}
-
-	public Date getFechaFin() {
-		return fechaFin;
-	}
-
-	public void setFechaFin(Date fechaFin) {
-		this.fechaFin = fechaFin;
-	}
-
-	public Integer getCdEstatusInversion() {
-		return cdEstatusInversion;
-	}
-
-	public void setCdEstatusInversion(Integer cdEstatusInversion) {
-		this.cdEstatusInversion = cdEstatusInversion;
-	}
-
 	public Integer getCdAppInversion() {
 		return cdAppInversion;
 	}
@@ -124,12 +107,20 @@ public class Inversion implements Serializable {
 		this.cdEstatus = cdEstatus;
 	}
 
-	public Integer getCdTipoMovimiento() {
-		return cdTipoMovimiento;
+	public Date getFechaCreacion() {
+		return fechaCreacion;
 	}
 
-	public void setCdTipoMovimiento(Integer cdTipoMovimiento) {
-		this.cdTipoMovimiento = cdTipoMovimiento;
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 
+	public Double getMontoRetirado() {
+		return montoRetirado;
+	}
+
+	public void setMontoRetirado(Double montoRetirado) {
+		this.montoRetirado = montoRetirado;
+	}
+	
 }

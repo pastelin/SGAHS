@@ -2,20 +2,22 @@
 **/bin/
 
 ## folders
-**/.metadata/
-**/.sonarlint/
+
 **/build/
-**/.settings/
-**/.apt_generated/
 **/target/
 **/classes/
 **/Servers/
 **/RemoteSystemsTempFiles/
+**/node_modules
 
 
 ## archivos
+**/.metadata/
+**/.sonarlint/
 **/.classpath
 **/.project
+**/.settings/
+**/.apt_generated/
 
 
 # Package Files #

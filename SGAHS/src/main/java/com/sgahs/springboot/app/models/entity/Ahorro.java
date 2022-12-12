@@ -11,9 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.sgahs.springboot.app.validation.MontoValido;
 
 @Entity
 @Table(name = "ahorros")
@@ -31,18 +34,19 @@ public class Ahorro implements Serializable {
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date fechaCreacion;
 
+	@MontoValido
 	private Double monto;
 
+	@NotEmpty
 	private String descripcion;
 
 	@Column(name = "cd_estatus")
 	private Integer cdEstatus;
 
-	@Column(name = "cd_app_inversion")
-	private Integer cdAppInversion;
-
-	@Column(name = "cd_tipo_movimiento")
-	private Integer cdTipoMovimiento;
+	public Ahorro() {
+		this.fechaCreacion = new Date();
+		this.cdEstatus = 1;
+	}
 
 	public Long getId() {
 		return id;
@@ -82,22 +86,6 @@ public class Ahorro implements Serializable {
 
 	public void setCdEstatus(Integer cdEstatus) {
 		this.cdEstatus = cdEstatus;
-	}
-
-	public Integer getCdAppInversion() {
-		return cdAppInversion;
-	}
-
-	public void setCdAppInversion(Integer cdAppInversion) {
-		this.cdAppInversion = cdAppInversion;
-	}
-
-	public Integer getCdTipoMovimiento() {
-		return cdTipoMovimiento;
-	}
-
-	public void setCdTipoMovimiento(Integer cdTipoMovimiento) {
-		this.cdTipoMovimiento = cdTipoMovimiento;
 	}
 
 }

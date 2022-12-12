@@ -11,9 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.sgahs.springboot.app.validation.MontoValido;
 
 @Entity
 @Table(name = "gastos")
@@ -31,19 +34,30 @@ public class Gasto implements Serializable {
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date fechaCreacion;
 
+	@MontoValido
+	private Double monto;
+
+	@NotEmpty
 	private String descripcion;
 
-	@Column(name = "cd_gasto")
-	private Integer cdGasto;
+	@NotNull
+	@Column(name = "cd_gasto_recurrente")
+	private Integer cdGastoRecurrente;
 
+	@NotNull
 	@Column(name = "cd_estatus")
 	private Integer cdEstatus;
 
-	@Column(name = "cd_app_inversion")
-	private Integer cdAppInversion;
-
-	@Column(name = "cd_tipo_movimiento")
+	@NotNull
+	@Column(name = "cd_tipo_movimiento_gasto")
 	private Integer cdTipoMovimiento;
+
+	public Gasto() {
+		this.fechaCreacion = new Date();
+		this.cdTipoMovimiento = 1;
+		this.cdEstatus = 1;
+		this.cdGastoRecurrente = 0;
+	}
 
 	public Long getId() {
 		return id;
@@ -69,12 +83,12 @@ public class Gasto implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public Integer getCdGasto() {
-		return cdGasto;
+	public Integer getCdGastoRecurrente() {
+		return cdGastoRecurrente;
 	}
 
-	public void setCdGasto(Integer cdGasto) {
-		this.cdGasto = cdGasto;
+	public void setCdGastoRecurrente(Integer cdGasto) {
+		this.cdGastoRecurrente = cdGasto;
 	}
 
 	public Integer getCdEstatus() {
@@ -85,20 +99,20 @@ public class Gasto implements Serializable {
 		this.cdEstatus = cdEstatus;
 	}
 
-	public Integer getCdAppInversion() {
-		return cdAppInversion;
-	}
-
-	public void setCdAppInversion(Integer cdAppInversion) {
-		this.cdAppInversion = cdAppInversion;
-	}
-
 	public Integer getCdTipoMovimiento() {
 		return cdTipoMovimiento;
 	}
 
 	public void setCdTipoMovimiento(Integer cdTipoMovimiento) {
 		this.cdTipoMovimiento = cdTipoMovimiento;
+	}
+
+	public Double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(Double monto) {
+		this.monto = monto;
 	}
 
 }

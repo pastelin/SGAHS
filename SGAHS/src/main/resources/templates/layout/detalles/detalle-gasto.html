@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<div class="contenedor-detalle" th:fragment="detalle-gasto">
+			<h2>Detalle Gasto</h2>
+
+			<div class="filtro">
+				<form class="form-filtro" action="">
+					<div class="campo">
+						<select name="" id="">
+							<option value="">Seleccione un filtro</option>
+							<option value="">Fecha descendiente</option>
+							<option value="">Fecha ascendente</option>
+						</select>
+					</div>
+
+					<div class="campo">
+						<select name="" id="">
+							<option value="">Seleccione un filtro</option>
+							<option value="">Compras</option>
+							<option value="">Apartado para gastos</option>
+						</select>
+					</div>
+
+					<div class="campo">
+						<select name="" id="">
+							<option value="">Seleccione un filtro</option>
+							<option value="">Activo</option>
+							<option value="">deshabilitado</option>
+						</select>
+					</div>
+					<input type="submit" value="Filtrar" class="boton-table boton-filtrar" />
+				</form>
+
+				<div style="display:flex; justify-content: space-around">
+					<h3>Disponible: 
+						$<span th:text="${#numbers.formatDecimal(totalGastoDisponible, 0, 'COMMA', 2, 'POINT')}"></span>
+					</h3>
+					<h3 style="color: red">
+						Gastado:
+						$<span th:text="${#numbers.formatDecimal(montoGastado, 0, 'COMMA', 2, 'POINT')}"></span>
+					</h3>
+				</div>
+			</div>
+
+			<a class="boton boton-enviar" th:href="@{/dashboard/formGasto}"> Agregar Gasto </a>
+
+			<div class="contenedor-table">
+				<table class="table table-hover">
+					<thead class="table-primary">
+						<tr>
+							<th>Fecha</th>
+							<th>Monto</th>
+							<th>Descripción</th>
+							<th>Compra</th>
+							<th>Tipo</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="gastoItem : ${gastos}">
+							<td th:text="${gastoItem.fechaCreacion}"></td>
+							<td>$<span th:text="${#numbers.formatDecimal(gastoItem.monto, 0, 'COMMA', 2, 'POINT')}"></span></td>
+							<td class="descripcion" th:text="${gastoItem.descripcion}"></td>
+							<td th:text="${gastoItem.cdGastoRecurrente}"></td>
+							<td th:text="${gastoItem.cdTipoMovimiento}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>
