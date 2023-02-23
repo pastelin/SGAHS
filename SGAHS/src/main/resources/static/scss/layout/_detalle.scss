@@ -30,7 +30,7 @@
 .contenedor-detalle {
 	width: 36rem;
 	text-align: center;
-	margin: 6.5rem auto auto;
+	margin: 3rem auto auto;
 
 	@include m.tablet {
 		width: 70rem;
@@ -65,7 +65,7 @@
 	}
 
 	@include m.desktop {
-        font-size: 1.6rem;
+		font-size: 1.6rem;
 		max-width: 90rem;
 	}
 
@@ -74,34 +74,12 @@
 	}
 
 	.descripcion {
-        max-width: 40rem;
-        font-size: 1rem;
-
-        @include m.tablet {
-            font-size: 1.2rem;
-        };
-	}
-}
-
-.filtro {
-	display: flex;
-	justify-content: space-around;
-	flex-direction: column;
-	gap: 2rem;
-
-	.form-filtro {
-		@include m.grid(1, 1rem);
+		max-width: 40rem;
+		font-size: 1rem;
 
 		@include m.tablet {
-			@include m.grid(2, 1rem);
-		}
-
-		@include m.desktop {
-			@include m.grid(3, 1rem);
-		}
-
-		@include m.desktopXL {
-			@include m.grid(4, 1rem);
+			font-size: 1.2rem;
 		}
 	}
 }
+
